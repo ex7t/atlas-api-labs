@@ -31,3 +31,8 @@ class UserFullDto(BaseSchema):
     username: Username
     email: Email
     login: Login
+
+
+class PublicUserDto(BaseSchema):
+    id: int = Field(ge=1)
+    username: Username

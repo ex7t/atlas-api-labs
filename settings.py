@@ -1,4 +1,4 @@
-from pydantic import Field
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.engine import URL, make_url
 
@@ -17,6 +17,9 @@ class AppSettings(BaseSettings):
     USERS_SQL_SCHEMA: str = Field(default="users", pattern=r"^[a-z_][a-z0-9_]{0,62}$")
     POSTS_SQL_SCHEMA: str = Field(default="post", pattern=r"^[a-z_][a-z0-9_]{0,62}$")
     SQL_ECHO: bool = False
+    JWT_SECRET_KEY: SecretStr = Field(min_length=32)
+    ACCESS_TOKEN_MINUTES: int = Field(default=15, ge=1, le=1440)
+    REFRESH_TOKEN_DAYS: int = Field(default=7, ge=1, le=365)
 
     @property
     def database_url(self) -> URL:
