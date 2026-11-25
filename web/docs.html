@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Атлас API · $title</title>
+  <link rel="stylesheet" href="$assets/vendor/swagger-ui.css">
+  <link rel="stylesheet" href="$assets/atlas.css">
+  <script defer src="$assets/vendor/swagger-ui-bundle.js"></script>
+  <script defer src="$assets/atlas.js"></script>
+</head>
+<body>
+  <header class="atlas-header">
+    <a class="atlas-brand" href="$docs">
+      <span class="atlas-mark" aria-hidden="true"></span>
+      <span>Атлас API</span>
+    </a>
+    <div class="atlas-header-actions">
+      <a class="atlas-spec" href="$spec">OpenAPI JSON</a>
+    </div>
+  </header>
+
+  <div class="atlas-layout">
+    <aside class="atlas-sidebar">
+      <p class="atlas-sidebar-title">Разделы API</p>
+      <nav id="atlas-nav" aria-label="Разделы API"></nav>
+      <p class="atlas-sidebar-footer">Версия API $version</p>
+    </aside>
+
+    <main class="atlas-content">
+      <section class="atlas-intro">
+        <p class="atlas-kicker">$title</p>
+        <h1 class="atlas-title">Документация API</h1>
+        <p class="atlas-description">Откройте маршрут, чтобы посмотреть параметры и отправить запрос.</p>
+      </section>
+      <p class="atlas-status" id="atlas-status" role="status">Загружаем маршруты…</p>
+      <div id="swagger-ui" data-spec="$spec" data-redirect="$redirect"></div>
+    </main>
+  </div>
+</body>
+</html>
