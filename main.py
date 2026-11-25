@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 
-from web.docs import install_docs
+from src.routers.post_router import router as post_router
 
-app = FastAPI(title="Мой блог", version="1.0", docs_url=None)
+app = FastAPI(title="Мой блог", version="1.0")
+app.include_router(post_router)
 
 
 @app.get("/")

@@ -1,30 +1,19 @@
-# Лабораторная работа № 1
+# Лабораторная работа № 2
 
-Приложение «Мой блог» на FastAPI.
+Блог хранит посты в памяти процесса. FastAPI внедряет репозиторий в контроллер через `Depends`. После перезапуска данные возвращаются к исходному набору.
 
-## Запуск
+## Запуск в PowerShell
 
 ```powershell
 py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements/requirements.txt
 .\.venv\Scripts\python.exe -m uvicorn main:app --reload
 ```
 
-## Запуск в Docker
-
-```powershell
-docker compose up -d --build --wait
-```
-
-Оба способа запуска используют порт 8000. Перед сменой способа остановите приложение. Для остановки контейнера выполните `docker compose down`.
+Для запуска в Docker выполните `docker compose up -d --build --wait`. Оба способа используют порт 8000. Для остановки контейнера выполните `docker compose down`.
 
 ## Проверка
 
-| Запрос | Ожидаемый ответ |
-| --- | --- |
-| `GET /` | `{"message":"Привет, мир!"}` |
-| `GET /about` | `{"name":"Мой блог","version":"1.0"}` |
+В Swagger UI по адресу http://127.0.0.1:8000/docs отправьте `POST /post` с JSON `{"authorName":"Bob","content":"Новый пост"}`. Используйте полученный ID в `GET /post/{id}`, `PUT /post/{id}` и `DELETE /post/{id}`. Список постов доступен по `GET /post/many`. Маршруты `GET /` и `GET /about` из первой работы также доступны.
 
-«Атлас API» доступен по адресу http://127.0.0.1:8000/docs.
-
-Оформление страницы /docs описано в [web/README.md](web/README.md).
+Ответы на контрольные вопросы приведены в [CHANGELOG.md](CHANGELOG.md).
