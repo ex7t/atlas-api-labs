@@ -37,7 +37,7 @@ py -3.12 -m venv .venv
 2. Вызовите `POST /authorization/login` с JSON `{"login":"bob","password":"sample-pass-1"}`. Ответ содержит `accessToken` и `refreshToken`.
 3. Передайте `{"accessToken":"<accessToken>"}` в `POST /authentication/verify_access_token`. Ожидается HTTP 200. Для доступа к защищённым маршрутам также можно нажать **Authorize** и ввести свой логин в поле **username**, а пароль в поле **password**. Swagger получит отдельную пару через `POST /authorization/token`.
 4. Вызовите `POST /authentication/refresh_tokens` с JSON `{"refreshToken":"<refreshToken>"}`. Оба JWT прежней пары перестанут работать. Повторное обновление с прежним refresh-токеном вернёт HTTP 401.
-5. Вызовите `POST /authentication/logout` с новым refresh-токеном. После этого проверка соответствующего access-токена вернёт HTTP 401.
+5. Вызовите `POST /authentication/logout` с новым refresh-токеном. Ожидается HTTP 200 с телом `{}`. После этого проверка соответствующего access-токена вернёт HTTP 401.
 
 По умолчанию access-токен действует 15 минут, refresh-токен — 7 дней. БД хранит идентификаторы токенов, сроки действия и связи между записями. Пароли хешируются через bcrypt.
 
@@ -55,6 +55,6 @@ py -3.12 -m venv .venv
 
 ## Ветки и сдача
 
-`main` содержит начальный коммит, а локальная `develop` — результат третьей работы. Ветки `feature/lab1`–`feature/lab4` содержат последовательные результаты. Для учебного GitLab с пустой удалённой `develop` создавайте Merge Request в порядке от первой работы к четвёртой, с целевой веткой `develop`. После принятия предыдущей работы diff следующего запроса будет содержать её собственные изменения.
+Ветки `feature/lab1`–`feature/lab4` содержат последовательные результаты. Целевая ветка для всех Merge Request — `develop`. Рассматривайте их в порядке от первой работы к четвёртой. После принятия предыдущей работы diff следующего запроса будет содержать её собственные изменения.
 
 Ответы на вопросы лабораторных № 2–4 приведены в [CHANGELOG.md](CHANGELOG.md). Описание разработки и форматы API сверены с [документацией FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [SQLAlchemy](https://docs.sqlalchemy.org/en/20/dialects/postgresql.html), [Alembic](https://alembic.sqlalchemy.org/en/latest/cookbook.html) и [Docker Compose](https://docs.docker.com/reference/cli/docker/compose/up/).
