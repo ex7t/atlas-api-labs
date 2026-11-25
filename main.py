@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 
-app = FastAPI(title="Мой блог", version="1.0")
+from web.docs import install_docs
+
+app = FastAPI(title="Мой блог", version="1.0", docs_url=None)
 
 
 @app.get("/")
@@ -11,3 +13,6 @@ def hello_world() -> dict[str, str]:
 @app.get("/about")
 def about_page() -> dict[str, str]:
     return {"name": "Мой блог", "version": "1.0"}
+
+
+install_docs(app)
