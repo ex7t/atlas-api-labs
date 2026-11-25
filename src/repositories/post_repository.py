@@ -1,34 +1,35 @@
-from itertools import count
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.models import PostModel
 from src.schemas.posts import PostFullDto, PostWrite
 
+from .base_db_repository import BaseDbRepository
 
-class PostRepository:
-    def __init__(self) -> None:
-        self._posts = {
-            1: PostFullDto(id=1, author_name="Bob", content="52"),
-            2: PostFullDto(id=2, author_name="Billy", content="67"),
-            3: PostFullDto(id=3, author_name="John", content="Lorem ipsum"),
-        }
-        self._ids = count(4)
+
+class PostRepository(BaseDbRepository[PostModel]):
+    def __init__(self, session: AsyncSession) -> None:
+        super().__init__(session, PostModel)
 
     async def list(self) -> list[PostFullDto]:
-        return list(self._posts.values())
+        return [PostFullDto.model_validate(row) for row in await self.list_rows()]
 
     async def get(self, post_id: int) -> PostFullDto | None:
-        return self._posts.get(post_id)
+        row = await self.get_row(post_id)
+        return PostFullDto.model_validate(row) if row is not None else None
 
     async def create(self, data: PostWrite) -> PostFullDto:
-        post = PostFullDto(id=next(self._ids), **data.model_dump())
-        self._posts[post.id] = post
-        return post
+        row = await self.upsert(data.model_dump())
+        result = PostFullDto.model_validate(row)
+        await self.session.commit()
+        return result
 
     async def update(self, post_id: int, data: PostWrite) -> PostFullDto | None:
-        if post_id not in self._posts:
-            return None
-        post = PostFullDto(id=post_id, **data.model_dump())
-        self._posts[post_id] = post
-        return post
+        row = await self.update_row(post_id, data.model_dump())
+        result = PostFullDto.model_validate(row) if row is not None else None
+        await self.session.commit()
+        return result
 
     async def delete(self, post_id: int) -> bool:
-        return self._posts.pop(post_id, None) is not None
+        deleted = await self.delete_row(post_id)
+        await self.session.commit()
+        return deleted
