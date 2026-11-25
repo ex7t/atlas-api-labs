@@ -3,13 +3,12 @@ from typing import Annotated
 from fastapi import Depends
 
 from src.controllers.post_controller import PostController
+from src.dependencies.database import DbSession
 from src.repositories.post_repository import PostRepository
 
-post_repository = PostRepository()
 
-
-async def get_post_repository() -> PostRepository:
-    return post_repository
+async def get_post_repository(session: DbSession) -> PostRepository:
+    return PostRepository(session)
 
 
 async def get_post_controller(
