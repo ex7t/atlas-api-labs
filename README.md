@@ -14,6 +14,8 @@ py -3.12 -m venv .venv
 
 ## Проверка
 
-В Swagger UI по адресу http://127.0.0.1:8000/docs отправьте `POST /post` с JSON `{"authorName":"Bob","content":"Новый пост"}`. Используйте полученный ID в `GET /post/{id}`, `PUT /post/{id}` и `DELETE /post/{id}`. Список постов доступен по `GET /post/many`. Маршруты `GET /` и `GET /about` из первой работы также доступны.
+В «Атлас API» по адресу http://127.0.0.1:8000/docs отправьте `POST /post` с JSON `{"authorName":"Bob","content":"Новый пост"}`. Используйте полученный ID в `GET /post/{id}`, `PUT /post/{id}` и `DELETE /post/{id}`. Список постов доступен по `GET /post/many`. Маршруты `GET /` и `GET /about` из первой работы также доступны.
 
 Ответы на контрольные вопросы приведены в [CHANGELOG.md](CHANGELOG.md).
+
+Оформление страницы /docs описано в [web/README.md](web/README.md).
