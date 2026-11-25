@@ -4,14 +4,16 @@ from fastapi import HTTPException, status
 from sqlalchemy.exc import IntegrityError
 
 from src.models import UserModel
+from src.repositories.token_repository import TokenRepository
 from src.repositories.user_repository import UserRepository
 from src.schemas.users import UserFullDto, UserWrite
 from src.utils.passwords import hash_password
 
 
 class UserController:
-    def __init__(self, repository: UserRepository) -> None:
+    def __init__(self, repository: UserRepository, tokens: TokenRepository) -> None:
         self.repository = repository
+        self._tokens = tokens
 
     async def list(self) -> list[UserFullDto]:
         return [UserFullDto.model_validate(row) for row in await self.repository.list_rows()]
@@ -33,6 +35,7 @@ class UserController:
         values = await self._user_values(data)
         try:
             result = self._require_user(await self.repository.update_row(user_id, values))
+            await self._tokens.revoke_user_tokens(user_id)
             await self.repository.session.commit()
         except IntegrityError as exc:
             await self.repository.session.rollback()
@@ -40,8 +43,9 @@ class UserController:
         return result
 
     async def delete(self, user_id: int) -> None:
-        if not await self.repository.delete_row(user_id):
+        if not await self.repository.delete_row(user_id, actor_id=user_id):
             raise HTTPException(status.HTTP_404_NOT_FOUND, "Пользователь не найден")
+        await self._tokens.revoke_user_tokens(user_id)
         await self.repository.session.commit()
 
     @staticmethod
