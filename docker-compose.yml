@@ -1,0 +1,6 @@
+services:
+  blog-api:
+    image: blog-api-image
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
