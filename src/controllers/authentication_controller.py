@@ -5,7 +5,7 @@ from src.enums.auth import TokenKind
 from src.exceptions.auth import InvalidToken
 from src.repositories.token_repository import TokenRepository
 from src.repositories.user_repository import UserRepository
-from src.schemas.auth import LogoutResponse, TokensResponse, VerifyAccessTokenResponse
+from src.schemas.auth import TokensResponse, VerifyAccessTokenResponse
 from src.utils.jwt_tokens import decode_token
 
 
@@ -36,9 +36,8 @@ class AuthenticationController:
         await self._repository.session.commit()
         return result
 
-    async def logout(self, refresh_token: str) -> LogoutResponse:
+    async def logout(self, refresh_token: str) -> None:
         token = decode_token(refresh_token, TokenKind.REFRESH)
         if not await self._repository.consume_refresh(token, datetime.now(UTC)):
             raise InvalidToken()
         await self._repository.session.commit()
-        return LogoutResponse()

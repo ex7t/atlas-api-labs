@@ -5,7 +5,6 @@ from fastapi import APIRouter, Depends
 from src.controllers.authentication_controller import AuthenticationController
 from src.dependencies.auth import get_authentication_controller
 from src.schemas.auth import (
-    LogoutResponse,
     RefreshTokenRequest,
     TokensResponse,
     VerifyAccessTokenRequest,
@@ -29,5 +28,6 @@ async def refresh(data: RefreshTokenRequest, controller: Controller) -> TokensRe
 
 
 @router.post("/logout", summary="Завершить сеанс")
-async def logout(data: RefreshTokenRequest, controller: Controller) -> LogoutResponse:
-    return await controller.logout(data.refresh_token)
+async def logout(data: RefreshTokenRequest, controller: Controller) -> dict[str, str]:
+    await controller.logout(data.refresh_token)
+    return {}

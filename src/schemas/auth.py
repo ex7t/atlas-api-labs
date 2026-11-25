@@ -34,10 +34,6 @@ class VerifyAccessTokenResponse(BaseSchema):
     access_token: str
 
 
-class LogoutResponse(BaseSchema):
-    message: str = "Сеанс завершён"
-
-
 class TokenDto(BaseSchema):
     id: int
     user_id: int
