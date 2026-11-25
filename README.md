@@ -26,7 +26,7 @@ py -3.12 -m venv .venv
 
 ## Проверка
 
-Откройте Swagger UI по адресу http://127.0.0.1:8000/docs.
+Откройте «Атлас API» по адресу http://127.0.0.1:8000/docs.
 
 | Действие | Посты | Пользователи |
 | --- | --- | --- |
@@ -37,3 +37,5 @@ py -3.12 -m venv .venv
 | Удалить | `DELETE /post/{id}` | `DELETE /user/{id}` |
 
 Пример поста — `{"name":"Первый пост","authorName":"Bob","content":"Привет!"}`. Пример пользователя — `{"username":"Bob","email":"bob@example.com","login":"bob","password":"sample-pass-1"}`. При удалении запись помечается в БД и пропадает из выборок. Пароли в БД хешируются с bcrypt. Ответы на контрольные вопросы приведены в [CHANGELOG.md](CHANGELOG.md).
+
+Оформление страницы /docs описано в [web/README.md](web/README.md).
