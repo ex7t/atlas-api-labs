@@ -25,4 +25,6 @@ docker compose up -d --build --wait
 | `GET /` | `{"message":"Привет, мир!"}` |
 | `GET /about` | `{"name":"Мой блог","version":"1.0"}` |
 
-Swagger UI доступен по адресу http://127.0.0.1:8000/docs.
+«Атлас API» доступен по адресу http://127.0.0.1:8000/docs.
+
+Оформление страницы /docs описано в [web/README.md](web/README.md).
