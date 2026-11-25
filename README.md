@@ -20,7 +20,7 @@ Add-Content -Path .env -Value "JWT_SECRET_KEY=$jwtKey"
 docker compose up -d --build --wait
 ```
 
-Compose поднимает базу PostgreSQL 17. Контейнер блога применяет обе миграции перед запуском API. Swagger UI доступен по адресу http://127.0.0.1:8000/docs. Для остановки выполните `docker compose down`. Данные остаются в томе PostgreSQL.
+Compose поднимает базу PostgreSQL 17. Контейнер блога применяет обе миграции перед запуском API. «Атлас API» доступен по адресу http://127.0.0.1:8000/docs. Для остановки выполните `docker compose down`. Данные остаются в томе PostgreSQL.
 
 Если PostgreSQL уже запущен локально, создайте пустую базу `blog_api`, укажите параметры базы в `.env` и выполните команды.
 
@@ -58,3 +58,5 @@ py -3.12 -m venv .venv
 Ветки `feature/lab1`–`feature/lab4` содержат последовательные результаты. Целевая ветка для всех Merge Request — `develop`. Рассматривайте их в порядке от первой работы к четвёртой. После принятия предыдущей работы diff следующего запроса будет содержать её собственные изменения.
 
 Ответы на вопросы лабораторных № 2–4 приведены в [CHANGELOG.md](CHANGELOG.md). Описание разработки и форматы API сверены с [документацией FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [SQLAlchemy](https://docs.sqlalchemy.org/en/20/dialects/postgresql.html), [Alembic](https://alembic.sqlalchemy.org/en/latest/cookbook.html) и [Docker Compose](https://docs.docker.com/reference/cli/docker/compose/up/).
+
+Оформление страницы /docs описано в [web/README.md](web/README.md).
